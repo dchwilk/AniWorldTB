@@ -15,8 +15,11 @@
     "MediaFastForward",
     "MediaRewind",
     "MediaTrackNext",
-    "MediaTrackPrevious"
-  ],
+    "MediaTrackPrevious",
+    "Home",
+    "VolumeUp",
+    "VolumeDown"
+],
   "repository": {
     "url": "https://github.com/dchwilk/AniWorldTB"
   },
