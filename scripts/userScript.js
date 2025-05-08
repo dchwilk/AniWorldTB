@@ -22,9 +22,54 @@ document.addEventListener('back', (event) => {
   }
 });
 
-//BetterTTV emotes
-import BetterTTV from "betterttv";
+// Lautstärketasten, Home & Zurück
+document.addEventListener('keydown', (event) => {
+  switch (event.code) {
+    case 'AudioVolumeUp':
+    case 'VolumeUp':
+      console.log('Volume Up');
+      break;
+    case 'AudioVolumeDown':
+    case 'VolumeDown':
+      console.log('Volume Down');
+      break;
+    case 'Home':
+      console.log('Home gedrückt');
+      openHomeMenu();
+      break;
+    case 'Backspace':
+    case 'Back':
+      if (document.querySelector('#homeMenu.visible')) {
+        document.querySelector('#homeMenu')?.classList.remove('visible');
+      } else {
+        window.history.back();
+      }
+      break;
+    case 'ArrowRight':
+      focusNext();
+      break;
+    case 'ArrowLeft':
+      focusPrev();
+      break;
+  }
+});
 
-BetterTTV.getGlobalEmotes()
-    .then(console.log);
-// Returns Emote[],
+function openHomeMenu() {
+  document.querySelector('#homeMenu')?.classList.add('visible');
+}
+
+function focusNext() {
+  const focusables = Array.from(document.querySelectorAll('[tabindex]'));
+  const index = focusables.indexOf(document.activeElement);
+  if (index >= 0 && index < focusables.length - 1) {
+    focusables[index + 1].focus();
+  }
+}
+
+function focusPrev() {
+  const focusables = Array.from(document.querySelectorAll('[tabindex]'));
+  const index = focusables.indexOf(document.activeElement);
+  if (index > 0) {
+    focusables[index - 1].focus();
+  }
+}
