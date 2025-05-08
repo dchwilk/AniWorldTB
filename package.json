@@ -1,12 +1,12 @@
 {
-  "name": "@owen-the-kid/twitchtb",
-  "appName": "TwitchTB",
-  "version": "1.1.3",
-  "description": "Twitch app with adblocker",
+  "name": "@dchwilk/aniworldtb",
+  "appName": "AniWorldTB",
+  "version": "1.0.0",
+  "description": "AniWorld with adblocker",
   "packageType": "mods",
-  "websiteURL": "https://hisense.tv.twitch.tv",
+  "websiteURL": "https://aniworld.to/",
   "main": "scripts/userScript.js",
-  "author": "Owen The Kid",
+  "author": "Ygreck",
   "keys": [
     "MediaPlayPause",
     "MediaPlay",
@@ -18,7 +18,7 @@
     "MediaTrackPrevious"
   ],
   "repository": {
-    "url": "https://github.com/owen-the-kid/TwitchTB"
+    "url": "https://github.com/dchwilk/AniWorldTB"
   },
   "license": "GPL-3.0-only"
 }
