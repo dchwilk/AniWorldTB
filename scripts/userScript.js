@@ -1,5 +1,6 @@
-// Install uBlock Origin core via npm
+// == AniWorldTV Enhancements für TizenTV & Desktop mit Tastatur/Remote ==
 
+// uBlock Origin Blocklist
 const { StaticNetFilteringEngine } = require('@gorhill/ubo-core');
 
 const blocklistText = `
@@ -11,27 +12,45 @@ const blocklistText = `
 `;
 
 const snfe = await StaticNetFilteringEngine.create();
-await snfe.useLists([ { raw: blocklistText } ]);
+await snfe.useLists([{ raw: blocklistText }]);
 
-// Apply the filter list as needed in your application
-
-// ESC Key emualtion for back button
-document.addEventListener('back', (event) => {
-  if (event.key === 'Escape') {
-    window.history.back();
-  }
+// == Fokus-Navigation aktivieren ==
+document.querySelectorAll('a, button').forEach(el => {
+  el.setAttribute('tabindex', '0');
 });
 
-// Lautstärketasten, Home & Zurück
+// == Tastatursteuerung ==
 document.addEventListener('keydown', (event) => {
+  const focusables = Array.from(document.querySelectorAll('a[tabindex], button[tabindex]'));
+  const index = focusables.indexOf(document.activeElement);
+
   switch (event.code) {
+    case 'ArrowRight':
+    case 'ArrowDown':
+      if (index >= 0 && index < focusables.length - 1) {
+        focusables[index + 1].focus();
+        event.preventDefault();
+      }
+      break;
+    case 'ArrowLeft':
+    case 'ArrowUp':
+      if (index > 0) {
+        focusables[index - 1].focus();
+        event.preventDefault();
+      }
+      break;
+    case 'Enter':
+    case 'NumpadEnter':
+      document.activeElement?.click();
+      event.preventDefault();
+      break;
     case 'AudioVolumeUp':
     case 'VolumeUp':
-      console.log('Volume Up');
+      console.log('Lauter gedrückt');
       break;
     case 'AudioVolumeDown':
     case 'VolumeDown':
-      console.log('Volume Down');
+      console.log('Leiser gedrückt');
       break;
     case 'Home':
       console.log('Home gedrückt');
@@ -39,18 +58,20 @@ document.addEventListener('keydown', (event) => {
       break;
     case 'Backspace':
     case 'Back':
+    case 'Escape':
       if (document.querySelector('#homeMenu.visible')) {
         document.querySelector('#homeMenu')?.classList.remove('visible');
       } else {
         window.history.back();
       }
       break;
-    case 'ArrowRight':
-      focusNext();
-      break;
-    case 'ArrowLeft':
-      focusPrev();
-      break;
+  }
+});
+
+// ESC-Event vom Tizen-TV
+document.addEventListener('back', (event) => {
+  if (event.key === 'Escape') {
+    window.history.back();
   }
 });
 
@@ -58,18 +79,21 @@ function openHomeMenu() {
   document.querySelector('#homeMenu')?.classList.add('visible');
 }
 
-function focusNext() {
-  const focusables = Array.from(document.querySelectorAll('[tabindex]'));
-  const index = focusables.indexOf(document.activeElement);
-  if (index >= 0 && index < focusables.length - 1) {
-    focusables[index + 1].focus();
-  }
-}
+// Fokus auf erstes Element setzen bei Start
+window.addEventListener('load', () => {
+  const first = document.querySelector('a[tabindex], button[tabindex]');
+  if (first) first.focus();
+});
 
-function focusPrev() {
-  const focusables = Array.from(document.querySelectorAll('[tabindex]'));
-  const index = focusables.indexOf(document.activeElement);
-  if (index > 0) {
-    focusables[index - 1].focus();
+// Mauszeiger und Fokus sichtbar lassen
+document.body.style.cursor = 'default';
+const style = document.createElement('style');
+style.textContent = `
+  a:focus, button:focus {
+    outline: 3px solid #00aaff;
+    outline-offset: 3px;
+    border-radius: 4px;
+    transition: outline 0.2s;
   }
-}
+`;
+document.head.appendChild(style);
