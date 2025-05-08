@@ -1,4 +1,5 @@
 // == AniWorldTV Enhancements für TizenTV & Desktop mit Tastatur/Remote ==
+import './navigation.js';
 
 // uBlock Origin Blocklist
 const { StaticNetFilteringEngine } = require('@gorhill/ubo-core');
