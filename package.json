@@ -1,7 +1,7 @@
 {
   "name": "@dchwilk/aniworldtb",
   "appName": "AniWorldTB",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "AniWorld with adblocker",
   "packageType": "mods",
   "websiteURL": "https://aniworld.to/",
@@ -15,11 +15,7 @@
     "MediaFastForward",
     "MediaRewind",
     "MediaTrackNext",
-    "MediaTrackPrevious",
-    "Home",
-    "Back",
-    "VolumeUp",
-    "VolumeDown"
+    "MediaTrackPrevious"
 ],
   "repository": {
     "url": "https://github.com/dchwilk/AniWorldTB"
